@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
+@import "tailwindcss";
+
+#app {
+  margin: 0 auto;
+  font-weight: normal;
+}
+
+body {
+  font-family: 'Dancing Script', cursive;
+}
+
+a,
+.green {
+  text-decoration: none;
+  transition: 0.4s;
+  padding: 3px;
+}
+
+@media (hover: hover) {
+  a:hover {
+    text-decoration-line: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+  }
+}
+
+
