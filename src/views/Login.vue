@@ -40,7 +40,7 @@
     </div>
     
     <!-- 右邊背景或註冊提示 -->
-    <div class="flex flex-col justify-center items-center w-1/2 h-2/3 bg-cover text-white rounded-e-2xl" style="background-image: url('/3.jpg');">
+    <div class="flex flex-col justify-center items-center w-1/2 h-2/3 bg-cover text-white rounded-e-2xl" style="background-image: url('/login-background.jpg');">
       <h2 class="text-3xl font-bold mb-4">New Here?</h2>
       <p class="mb-6">Sign up with your social media account</p>
       
