@@ -29,5 +29,8 @@ coverage
 
 *.tsbuildinfo
 
+.env
 env.d.ts
 **/*.d.ts
+
+src/lib/supabase.js
