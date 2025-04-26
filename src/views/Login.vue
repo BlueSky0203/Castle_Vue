@@ -72,7 +72,7 @@ const password = ref('')
 
 const handleLogin = () => {
   console.log('Login clicked', account.value, password.value)
-  // 這裡未來接 supabase.login
+  
 }
 </script>
 

@@ -7,6 +7,15 @@ export default defineConfig({
     vue(),
     tailwindcss(),
   ],
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://localhost:8080',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+    },
+  },
   define: {
     'process.env': {},
     global: 'window', // Fix for crypto error
