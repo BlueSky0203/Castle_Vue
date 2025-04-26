@@ -9,7 +9,11 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "skipLibCheck": true,
-    "types": ["vite/client"]
+    "types": ["vite/client", "vue"],  // 加入 vue 類型支持
+    "baseUrl": "./src",      // 根目錄設定為 src
+    "paths": {
+      "@/*": ["./*"]         // 設置 @ 為 src 路徑的別名
+    }
   },
   "include": ["env.d.ts", "src"]
 }
