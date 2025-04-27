@@ -38,6 +38,11 @@ export interface CreateCastleListResponse {
   castle: Castle
 }
 
+export interface CreateCastleImageResponse {
+  message: string,
+  image_url: string
+}
+
 export interface GetCastleTypeResponse {
   list: CastleType[]
 }

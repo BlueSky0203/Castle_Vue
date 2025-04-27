@@ -6,6 +6,7 @@
       <ul class="flex gap-6">
         <li><RouterLink to="/" class="text-lg font-bold">Home</RouterLink></li>
         <li><RouterLink to="/explore" class="text-lg font-bold">Explore</RouterLink></li>
+        <li><RouterLink to="/castle/create" class="text-lg font-bold">Create Castle</RouterLink></li>
         <li><RouterLink to="/login" class="text-lg font-bold">Login</RouterLink></li>
       </ul>
     </div>
