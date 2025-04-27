@@ -20,8 +20,24 @@ export interface Castle {
   name_zh: string
 }
 
+export interface CastleType {
+  id: number
+  name: string
+  description: string
+  name_zh: string
+}
+
 // 定義回傳的資料結構
 export interface GetCastleListResponse {
   list: Castle[]
   total: number
+}
+
+export interface CreateCastleListResponse {
+  message: string,
+  castle: Castle
+}
+
+export interface GetCastleTypeResponse {
+  list: CastleType[]
 }

@@ -1,7 +1,6 @@
 <template>
   <div class="p-6 bg-gray-900 h-screen text-white rounded-2xl" style="height: 75vh;">
     <h1 class="text-2xl font-bold mb-6">Castle Cards</h1>
-
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       <div
         v-for="(item, index) in list"
@@ -39,6 +38,5 @@ async function getList() {
   total.value = data.total
   
 }
-
 
 </script>
