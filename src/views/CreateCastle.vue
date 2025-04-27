@@ -1,8 +1,7 @@
 <template>
   <div class="p-6 bg-gray-900 h-screen text-white rounded-2xl" style="height: 75vh;">
-    <!-- 圖片上傳區 -->
     <div class="mb-10 flex justify-start space-x-4">
-      <label for="image-upload" class="block text-lg font-semibold w-32">上傳城堡圖片</label>
+      <label for="image-upload" class="block text-lg font-semibold w-40">Upload Castle Image</label>
       <div class="w-64 relative cursor-pointer">
         <div v-if="!imageUrl" class="border border-dashed border-gray-600 bg-gray-800 rounded-md p-8 flex flex-col items-center justify-center">
           <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
@@ -20,39 +19,39 @@
           accept="image/jpeg, image/png"
           ref="fileInput"
         />
-        <p v-if="imageUrl" class="text-xs text-gray-500 mt-1 text-center">點擊圖片以更換</p>
+        <p v-if="imageUrl" class="text-xs text-gray-500 mt-1 text-center">Click image to change</p>
       </div>
     </div>
 
-    <!-- 城堡資料輸入區 -->
     <form @submit.prevent="submitCastle" class="space-y-4">
       <div class="flex items-center space-x-4">
-        <label for="name" class="block text-lg font-semibold w-32">城堡名稱</label>
-        <input v-model="castle.name" id="name" type="text" placeholder="輸入城堡名稱" class="w-full p-2 border border-gray-600 text-white rounded-md" required />
+        <label for="name" class="block text-lg font-semibold w-32">Castle Name</label>
+        <input v-model="castle.name" id="name" type="text" placeholder="Enter castle name" class="w-full p-2 border border-gray-600 text-white rounded-md" required />
       </div>
 
       <div class="flex items-center space-x-4">
-        <label for="type" class="block text-lg font-semibold w-32">城堡類型</label>
+        <label for="type" class="block text-lg font-semibold w-32">Castle Type</label>
         <select v-model="castle.type" id="type" class="w-full p-2 border border-gray-600 text-white rounded-md" required>
           <option v-for="item in castleTypeOptions" :key="item.id" :value="item.id" style="background-color: #4b5563;">{{ item.name }}</option>
         </select>
       </div>
 
-      <div class="flex items-start space-x-4"> <label for="description" class="block text-lg font-semibold w-32">城堡描述</label>
-        <textarea v-model="castle.description" id="description" placeholder="輸入城堡描述" class="w-full p-2 border border-gray-600 text-white rounded-md" required></textarea>
+      <div class="flex items-start space-x-4">
+        <label for="description" class="block text-lg font-semibold w-32">Castle Description</label>
+        <textarea v-model="castle.description" id="description" placeholder="Enter castle description" class="w-full p-2 border border-gray-600 text-white rounded-md" required></textarea>
       </div>
 
       <div class="flex items-center space-x-4">
-        <label for="country" class="block text-lg font-semibold w-32">國家</label>
-        <input v-model="castle.country" id="country" type="text" placeholder="輸入國家" class="w-full p-2 border border-gray-600 text-white rounded-md" required />
+        <label for="country" class="block text-lg font-semibold w-32">Country</label>
+        <input v-model="castle.country" id="country" type="text" placeholder="Enter country" class="w-full p-2 border border-gray-600 text-white rounded-md" required />
       </div>
 
       <div class="flex items-center space-x-4">
-        <label for="build_year" class="block text-lg font-semibold w-32">建造年份</label>
-        <input v-model="castle.build_year" id="build_year" type="number" placeholder="輸入建造年份" class="w-full p-2 border border-gray-600 text-white rounded-md" required />
+        <label for="build_year" class="block text-lg font-semibold w-32">Build Year</label>
+        <input v-model="castle.build_year" id="build_year" type="number" placeholder="Enter build year" class="w-full p-2 border border-gray-600 text-white rounded-md" required />
       </div>
 
-      <button type="submit" class="w-full bg-blue-600 text-white p-2 rounded-md">提交資料</button>
+      <button type="submit" class="w-full bg-blue-600 text-white p-2 rounded-md">Submit</button>
     </form>
   </div>
 </template>
@@ -65,14 +64,14 @@ import { Castle, CastleType } from '@/types/castle';
 
 const imageUrl = ref<string | null>(null)
 const selectedFile = ref<File | null>(null)
-const castle = reactive<Castle>({
+const castle = reactive({
   name: '',
   description: '',
   country: '',
   type: 0,
   image_url: '',
   build_year: 0,
-})
+} as Castle)
 
 const castleTypeOptions = ref<CastleType[]>([])
 
@@ -123,6 +122,10 @@ const submitCastle = async () => {
 
 const castleType = async () => {
   const data = await getCastleType()
-  castleTypeOptions.value = data
+  if (data && Array.isArray(data)) {
+    castleTypeOptions.value = data
+  } else {
+    castleTypeOptions.value = []
+  }
 }
 </script>

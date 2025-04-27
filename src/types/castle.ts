@@ -23,8 +23,6 @@ export interface Castle {
 export interface CastleType {
   id: number
   name: string
-  description: string
-  name_zh: string
 }
 
 // 定義回傳的資料結構
