@@ -30,13 +30,14 @@ onMounted(() => {
 })
 
 async function getList() {
-  const { data } = await getCastleList({
+  const data = await getCastleList({
     page: 1,
     pageSize: 12,
-  })
+  }) || { list: [], total: 0 }
 
-  list.value = data.castles
+  list.value = data.list
   total.value = data.total
+  
 }
 
 

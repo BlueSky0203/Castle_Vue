@@ -1,11 +1,8 @@
-import api from '@/utils/api'
-import { AxiosResponse } from 'axios'
+import { useRequest } from '@/utils/useRequest'
 import { GetCastleListParams, GetCastleListResponse } from '@/types/castle'
 
-export const getCastleList = (
-  params?: GetCastleListParams
-): Promise<AxiosResponse<GetCastleListResponse>> => {
-  return api({
+export const getCastleList = (params?: GetCastleListParams) => {
+  return useRequest<GetCastleListResponse>({
     url: '/castles',
     method: 'get',
     params,

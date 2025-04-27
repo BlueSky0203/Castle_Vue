@@ -22,6 +22,6 @@ export interface Castle {
 
 // 定義回傳的資料結構
 export interface GetCastleListResponse {
-  castles: Castle[]
+  list: Castle[]
   total: number
 }
