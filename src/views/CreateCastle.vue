@@ -1,4 +1,9 @@
 <template>
+  <AlertMessage
+    v-if="alertState.show"
+    :type="alertState.type"
+    :message="alertState.message"
+  />
   <div class="p-6 bg-gray-900 h-screen text-white rounded-2xl" style="height: 75vh;">
     <div class="mb-10 flex justify-start space-x-4">
       <label for="image-upload" class="block text-lg font-semibold w-40">Upload Castle Image</label>
@@ -51,7 +56,7 @@
         <input v-model="castle.build_year" id="build_year" type="number" placeholder="Enter build year" class="w-full p-2 border border-gray-600 text-white rounded-md" required />
       </div>
 
-      <button type="submit" class="w-full bg-blue-600 text-white p-2 rounded-md">Submit</button>
+      <button type="submit" class="w-full bg-blue-600 text-white p-2 rounded-md transition-colors duration-300 hover:bg-blue-700 active:bg-blue-800">Submit</button>
     </form>
   </div>
 </template>
@@ -61,9 +66,12 @@ import { ref, onMounted, reactive } from 'vue';
 import { createCastleList, uploadCastleImage } from '@/api/createCastle';
 import { getCastleType } from '@/api/explore';
 import { Castle, CastleType } from '@/types/castle';
+import AlertMessage from '@/components/AlertMessage.vue'
 
 const imageUrl = ref<string | null>(null)
 const selectedFile = ref<File | null>(null)
+const castleTypeOptions = ref<CastleType[]>([])
+
 const castle = reactive({
   name: '',
   description: '',
@@ -73,7 +81,11 @@ const castle = reactive({
   build_year: 0,
 } as Castle)
 
-const castleTypeOptions = ref<CastleType[]>([])
+const alertState = ref({
+  show: false,
+  type: '',
+  message: '',
+})
 
 onMounted(() => {
   castleType()
@@ -96,6 +108,7 @@ const handleImageUpload = async (event: Event) => {
 // 1. 先處理圖片 回傳image_url
 // 2. 加入城堡相關資料
 const submitCastle = async () => {
+  alertState.value = { show: false, type: '', message: '' }
 
   if (selectedFile.value) {
     const imageResponse = await uploadCastleImage(selectedFile.value)
@@ -108,12 +121,34 @@ const submitCastle = async () => {
     if (imageResponse?.message === "200") {
       const response = await createCastleList(castleData)
       if (response?.message === "200") {
-        console.log('Castle create successfully')
+        alertState.value = {
+          show: true,
+          type: 'success',
+          message: 'Created successfully'
+        }
+
+        // 清空表單
+        castle.name = ''
+        castle.description = ''
+        castle.country = ''
+        castle.type = 0
+        castle.image_url = ''
+        castle.build_year = 0
+        imageUrl.value = ''
+        selectedFile.value = null
       } else {
-        console.log('Castle Create failed')
+        alertState.value = {
+          show: true,
+          type: 'error',
+          message: 'Created failed'
+        }
       }
     } else {
-      console.log('upload failed')
+      alertState.value = {
+        show: true,
+        type: 'error',
+        message: 'Upload failed'
+      }
     }
 
   }
