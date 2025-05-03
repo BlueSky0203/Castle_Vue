@@ -21,6 +21,12 @@
       </div>
     </div>
   </div>
+  <Pagination
+    :currentPage="page"
+    :total="total"
+    :pageSize="pageSize"
+    @update:currentPage="handlePageChange"
+  />
 </template>
 
 
@@ -28,9 +34,12 @@
 import { ref, onMounted } from 'vue'
 import { getCastleList } from '@/api/explore'
 import { Castle } from '@/types/castle'
+import Pagination from '@/components/Pagination.vue'
 
 const list = ref<Castle[]>([])
-const total = ref<number>(0)
+const page = ref(1)
+const pageSize = ref(12)
+const total = ref(0)
 
 onMounted(() => {
   getList()
@@ -38,13 +47,17 @@ onMounted(() => {
 
 async function getList() {
   const data = await getCastleList({
-    page: 1,
-    pageSize: 12,
+    page: page.value,
+    pageSize: pageSize.value,
   }) || { list: [], total: 0 }
 
   list.value = data.list
   total.value = data.total
-  
+}
+
+function handlePageChange(p: number) {
+  page.value = p
+  getList()
 }
 
 </script>
