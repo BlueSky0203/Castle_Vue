@@ -1,5 +1,5 @@
 <template>
-  <div :style="{ backgroundImage: 'url(' + backgroundImageUrl + ')' }" class="relative h-screen w-screen bg-cover overflow-hidden">
+  <div :style="{ backgroundImage: 'url(' + backgroundImageUrl + ')' }" class="relative h-screen w-screen bg-cover overflow-hidden overflow-y-auto">
     <div class="absolute inset-0">
       <Header />
       <main class="min-h-screen mx-auto p-8 text-white pt-20">
