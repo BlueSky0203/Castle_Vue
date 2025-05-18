@@ -1,7 +1,7 @@
 <template>
-  <div class="flex h-screen p-30 2xl:px-120">
+  <div class="flex justify-center h-screen p-30 2xl:px-120">
     <!-- 左邊登入 -->
-    <div class="flex flex-col justify-center items-center w-1/2 h-2/3 bg-gray-900 text-white p-12 rounded-s-2xl">
+    <div class="flex flex-col justify-center items-center w-[500px] max-h-[600px] bg-gray-900 text-white p-12 rounded-s-2xl">
       <h1 class="text-4xl font-bold mb-8">Login</h1>
 
       <form class="w-full max-w-sm space-y-6">
@@ -40,7 +40,7 @@
     </div>
     
     <!-- 右邊背景或註冊提示 -->
-    <div class="flex flex-col justify-center items-center w-1/2 h-2/3 bg-cover text-white rounded-e-2xl" style="background-image: url('/login-background.jpg');">
+    <div class="flex flex-col justify-center items-center w-[500px] max-h-[600px] bg-cover text-white rounded-e-2xl" style="background-image: url('/login-background.jpg');">
       <h2 class="text-3xl font-bold mb-4">New Here?</h2>
       <p class="mb-6">Sign up with your social media account</p>
       
