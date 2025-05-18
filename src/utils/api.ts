@@ -1,16 +1,41 @@
-import axios, { AxiosInstance } from 'axios';
+import axios from 'axios'
+import { useAuthStore } from '@/stores/auth'
+import { useRouter } from 'vue-router' // 🔍 這個你要加上！
 
-// 自動判斷現在是開發 (dev) 還是上線 (prod)
-const isDev: boolean = import.meta.env.MODE === 'development';
+const isDev = import.meta.env.MODE === 'development'
 
-// 依環境切換 baseURL
-const baseURL: string = isDev
-  ? 'http://localhost:8080' // 開發時打到本機後端
-  : 'https://你的正式後端網址.com'; // 上線時打到正式後端
+const baseURL = isDev
+  ? 'http://localhost:8080'
+  : 'https://你的正式後端網址.com'
 
-const api: AxiosInstance = axios.create({
+const api = axios.create({
   baseURL,
-  timeout: 5000, // 5 秒 timeout，可自由調整
-});
+  timeout: 5000,
+})
 
-export default api;
+// ✅ 加上 token
+api.interceptors.request.use(
+  (config) => {
+    const authStore = useAuthStore()
+    const token = authStore?.token || localStorage.getItem('token')
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`
+    }
+    return config
+  },
+  (error) => Promise.reject(error)
+)
+
+// ✅ 自動導向登入頁
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      const router = useRouter()
+      router.push('/login')
+    }
+    return Promise.reject(error)
+  }
+)
+
+export default api
