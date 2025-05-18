@@ -2,18 +2,17 @@ import './assets/main.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
 import App from './App.vue'
 import router from './router'
-import { useAuthStore } from '@/stores/auth'
 
 const app = createApp(App)
 
+const pinia = createPinia()
+pinia.use(piniaPluginPersistedstate)  // 加入持久化插件
 
-app.use(createPinia())
+app.use(pinia)
 app.use(router)
-
-const authStore = useAuthStore() // 呼叫 store
-authStore.persistAuth() // 還原 token 與使用者資訊
 
 app.mount('#app')
