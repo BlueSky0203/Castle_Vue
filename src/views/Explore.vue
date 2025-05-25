@@ -1,9 +1,4 @@
 <template>
-  <AlertMessage
-    v-if="alertState.show"
-    :type="alertState.type"
-    :message="alertState.message"
-  />
   <div class="flex justify-center">
     <div class="w-[1200px] max-h-[900px] h-auto p-6 pb-12 bg-gray-900 text-white rounded-2xl">
       <h1 class="text-2xl font-bold mb-6">Castle Cards</h1>
@@ -63,7 +58,6 @@
   />
 </template>
 
-
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { getCastleList } from '@/api/explore'
@@ -71,19 +65,14 @@ import { Castle } from '@/types/castle'
 import Pagination from '@/components/Pagination.vue'
 import { getFavoriteList, addFavorite, removeFavorite } from '@/api/favorite'
 import type { AddFavoriteInput } from '@/types/favorite'
-import AlertMessage from '@/components/AlertMessage.vue'
+import { useToast } from '@/composables/useToast'
 
+const toast = useToast()
 const list = ref<Castle[]>([])
 const favorites = ref<Set<number>>(new Set())
 const page = ref(1)
 const pageSize = ref(12)
 const total = ref(0)
-
-const alertState = ref({
-  show: false,
-  type: '',
-  message: '',
-})
 
 onMounted(() => {
   getList()
@@ -119,21 +108,13 @@ async function toggleFavorite(castleId: number) {
     await removeFavorite(castleId)
     favorites.value.delete(castleId)
     item.is_favorite = false
-    alertState.value = {
-      show: true,
-      type: 'warning',
-      message: 'remove favorite successful'
-    }
+    toast('success', 'Remove successfully')
   } else {
     const payload: AddFavoriteInput = { castle_id: castleId }
     await addFavorite(payload)
     favorites.value.add(castleId)
     item.is_favorite = true
-    alertState.value = {
-      show: true,
-      type: 'success',
-      message: 'Add favorite successful'
-    }
+    toast('success', 'Add successfully')
   }
 }
 

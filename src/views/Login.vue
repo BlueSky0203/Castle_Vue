@@ -1,9 +1,4 @@
 <template>
-  <AlertMessage
-    v-if="alertState.show"
-    :type="alertState.type"
-    :message="alertState.message"
-  />
   <div class="flex justify-center h-screen p-30 2xl:px-120">
     <!-- 左邊登入 -->
     <div class="flex flex-col justify-center items-center w-[500px] max-h-[600px] bg-gray-900 text-white p-12 rounded-s-2xl">
@@ -74,18 +69,13 @@ import { ref } from 'vue'
 import { login } from '@/api/auth'
 import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router'
-import AlertMessage from '@/components/AlertMessage.vue'
+import { useToast } from '@/composables/useToast'
 
+const toast = useToast()
 const authStore = useAuthStore()
 const router = useRouter()
 const account = ref('')
 const password = ref('')
-
-const alertState = ref({
-  show: false,
-  type: '',
-  message: '',
-})
 
 
 const handleLogin = async () => {
@@ -95,22 +85,12 @@ const handleLogin = async () => {
   })
 
   if (res && res.token) {
-    alertState.value = {
-      show: true,
-      type: 'success',
-      message: 'Login successful'
-    }
-
+    toast('success', 'Login successfully')
     authStore.setToken(res.token)
     authStore.setUser(res.user)
-
     router.push('/')
   } else {
-    alertState.value = {
-      show: true,
-      type: 'error',
-      message: 'Login failed'
-    }
+    toast('error', 'Login failed')
   }
 }
 

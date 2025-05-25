@@ -1,9 +1,4 @@
 <template>
-  <AlertMessage
-    v-if="alertState.show"
-    :type="alertState.type"
-    :message="alertState.message"
-  />
   <header class="bg-black/30 text-white p-4 w-full">
     <div class="container mx-auto flex justify-between">
       <h1 class="text-xl font-bold">𝒞𝒶𝓈𝓉𝓁𝑒</h1>
@@ -42,26 +37,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router'
-import AlertMessage from '@/components/AlertMessage.vue'
+import { useToast } from '@/composables/useToast'
+
+const toast = useToast()
 const authStore = useAuthStore()
 const router = useRouter()
 
-const alertState = ref({
-  show: false,
-  type: '',
-  message: '',
-})
-
 const handleLogout = () => {
-  alertState.value = {
-    show: true,
-    type: 'success',
-    message: 'Logout successful'
-  }
+  toast('success', 'Logout successfully')
   authStore.logout()   // 清掉 token 跟 user
   router.push('/login') // 導回登入頁面
 }

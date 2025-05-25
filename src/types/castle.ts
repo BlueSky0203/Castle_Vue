@@ -18,6 +18,7 @@ export interface Castle {
   created_at: string
   updated_at: string
   name_zh: string
+  is_favorite: boolean
 }
 
 export interface CastleType {

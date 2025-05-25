@@ -1,9 +1,4 @@
 <template>
-  <AlertMessage
-    v-if="alertState.show"
-    :type="alertState.type"
-    :message="alertState.message"
-  />
   <div class="flex justify-center h-screen">
     <div class="w-[1000px] max-h-[700px] p-6 bg-gray-900 h-screen text-white rounded-2xl">
       <div class="mb-10 flex justify-start space-x-4">
@@ -68,7 +63,9 @@ import { ref, onMounted, reactive } from 'vue';
 import { createCastleList, uploadCastleImage } from '@/api/createCastle';
 import { getCastleType } from '@/api/explore';
 import { Castle, CastleType } from '@/types/castle';
-import AlertMessage from '@/components/AlertMessage.vue'
+import { useToast } from '@/composables/useToast'
+
+const toast = useToast()
 
 const imageUrl = ref<string | null>(null)
 const selectedFile = ref<File | null>(null)
@@ -83,11 +80,6 @@ const castle = reactive({
   build_year: 0,
 } as Castle)
 
-const alertState = ref({
-  show: false,
-  type: '',
-  message: '',
-})
 
 onMounted(() => {
   castleType()
@@ -110,8 +102,6 @@ const handleImageUpload = async (event: Event) => {
 // 1. 先處理圖片 回傳image_url
 // 2. 加入城堡相關資料
 const submitCastle = async () => {
-  alertState.value = { show: false, type: '', message: '' }
-
   if (selectedFile.value) {
     const imageResponse = await uploadCastleImage(selectedFile.value)
 
@@ -123,11 +113,7 @@ const submitCastle = async () => {
     if (imageResponse?.message === "200") {
       const response = await createCastleList(castleData)
       if (response?.message === "200") {
-        alertState.value = {
-          show: true,
-          type: 'success',
-          message: 'Created successfully'
-        }
+        toast('success', 'Created successfully')
 
         // 清空表單
         castle.name = ''
@@ -139,18 +125,10 @@ const submitCastle = async () => {
         imageUrl.value = ''
         selectedFile.value = null
       } else {
-        alertState.value = {
-          show: true,
-          type: 'error',
-          message: 'Created failed'
-        }
+        toast('error', 'Created failed')
       }
     } else {
-      alertState.value = {
-        show: true,
-        type: 'error',
-        message: 'Upload failed'
-      }
+      toast('error', 'Upload failed')
     }
 
   }
