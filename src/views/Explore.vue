@@ -66,7 +66,9 @@ import Pagination from '@/components/Pagination.vue'
 import { getFavoriteList, addFavorite, removeFavorite } from '@/api/favorite'
 import type { AddFavoriteInput } from '@/types/favorite'
 import { useToast } from '@/composables/useToast'
+import { useAuthStore } from '@/stores/auth'
 
+const auth = useAuthStore()
 const toast = useToast()
 const list = ref<Castle[]>([])
 const favorites = ref<Set<number>>(new Set())
@@ -101,6 +103,11 @@ function handlePageChange(p: number) {
 }
 
 async function toggleFavorite(castleId: number) {
+  if (!auth.isLoggedIn) {
+    toast('warning', 'Please login to add favorites')
+    return
+  }
+
   const item = list.value.find(i => i.id === castleId)
   if (!item) return
 
