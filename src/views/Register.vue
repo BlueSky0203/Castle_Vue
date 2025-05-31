@@ -6,51 +6,27 @@
       <form @submit.prevent="handleRegister" class="space-y-5">
         <div>
           <label class="block mb-1 text-sm">Username</label>
-          <input
-            v-model="form.username"
-            class="w-full px-4 py-2 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
-          />
+          <input v-model="form.username" required />
         </div>
 
         <div>
           <label class="block mb-1 text-sm">Name</label>
-          <input
-            v-model="form.name"
-            class="w-full px-4 py-2 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
+          <input v-model="form.name" required />
         </div>
 
         <div>
           <label class="block mb-1 text-sm">Email</label>
-          <input
-            v-model="form.email"
-            type="email"
-            class="w-full px-4 py-2 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
-          />
+          <input v-model="form.email" type="email" required />
         </div>
 
         <div>
           <label class="block mb-1 text-sm">Password</label>
-          <input
-            v-model="form.password"
-            type="password"
-            minlength="6"
-            class="w-full px-4 py-2 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
-          />
+          <input v-model="form.password" type="password" required />
         </div>
 
         <div>
           <label class="block mb-1 text-sm">Confirm password</label>
-          <input
-            v-model="form.confirmPassword"
-            type="password"
-            minlength="6"
-            class="w-full px-4 py-2 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
-          />
+          <input v-model="form.confirmPassword" type="password" required />
         </div>
         
         <div class="flex justify-end space-x-3 pt-4">
