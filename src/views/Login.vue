@@ -11,7 +11,6 @@
             v-model="account"
             type="text"
             placeholder="Enter your username or email"
-            class="w-full p-3 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
@@ -21,7 +20,6 @@
             v-model="password"
             type="password"
             placeholder="Enter your password"
-            class="w-full p-3 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
