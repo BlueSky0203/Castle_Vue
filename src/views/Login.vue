@@ -58,14 +58,14 @@
       </div>
 
       <div class="mt-8">
-        <a href="#" class="text-blue-400 hover:underline">Create account</a>
+        <router-link to="/register" class="text-blue-400 hover:underline">Create account</router-link>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { login } from '@/api/auth'
 import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router'
@@ -77,6 +77,11 @@ const router = useRouter()
 const account = ref('')
 const password = ref('')
 
+onMounted(() => {
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') handleLogin()
+  })
+})
 
 const handleLogin = async () => {
   const res = await login({
