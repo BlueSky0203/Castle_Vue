@@ -81,12 +81,15 @@ onMounted(() => {
 })
 
 async function getList() {
-  const [castleRes, favoriteRes] = await Promise.all([
-    getCastleList({ page: page.value, pageSize: pageSize.value }),
-    getFavoriteList()
-  ])
+  const castlePromise = getCastleList({ page: page.value, pageSize: pageSize.value })
 
-  const favoriteIds = new Set<number>((favoriteRes?.favorites || []).map(f => f.castle_id))
+  let favoriteIds = new Set<number>()
+  if (auth.isLoggedIn) {
+    const favoriteRes = await getFavoriteList()
+    favoriteIds = new Set((favoriteRes?.favorites || []).map(f => f.castle_id))
+  }
+
+  const castleRes = await castlePromise
   favorites.value = favoriteIds
 
   list.value = (castleRes?.list || []).map((item: Castle) => ({
