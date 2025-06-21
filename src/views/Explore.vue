@@ -11,9 +11,10 @@
           <img
             :src="item.image_url"
             alt="castle"
-            class="w-full aspect-[4/3] object-cover"
+            class="w-full aspect-[4/3] object-cover cursor-pointer"
+            @click="openViewer(index)"
           />
-
+          
           <button
             class="absolute bottom-2 right-2 xl:bottom-4 xl:right-4"
             @click="toggleFavorite(item.id)"
@@ -47,6 +48,28 @@
           </button>
         </div>
       </div>
+
+      <transition name="fade">
+        <div
+          v-if="showViewer"
+          class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center"
+        >
+          <button class="absolute top-4 right-4 text-white text-2xl" @click="showViewer = false">✕</button>
+          <!-- 左箭頭 -->
+          <button class="absolute left-4 text-white hover:scale-110 transition" @click="prevImage">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          <img :src="list[currentIndex]?.image_url" class="max-w-[90vw] max-h-[90vh] object-contain" />
+          <!-- 右箭頭 -->
+          <button class="absolute right-4 text-white hover:scale-110 transition" @click="nextImage">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+      </transition>
     </div>
   </div>
   
@@ -75,6 +98,8 @@ const favorites = ref<Set<number>>(new Set())
 const page = ref(1)
 const pageSize = ref(12)
 const total = ref(0)
+const showViewer = ref(false)
+const currentIndex = ref(0)
 
 onMounted(() => {
   getList()
@@ -127,6 +152,24 @@ async function toggleFavorite(castleId: number) {
     toast('success', 'Add successfully')
   }
 }
+
+function openViewer(index: number) {
+  currentIndex.value = index
+  showViewer.value = true
+}
+
+function prevImage() {
+  if (currentIndex.value > 0) {
+    currentIndex.value--
+  }
+}
+
+function nextImage() {
+  if (currentIndex.value < list.value.length - 1) {
+    currentIndex.value++
+  }
+}
+
 
 </script>
 
