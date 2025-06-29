@@ -1,39 +1,22 @@
-# Castle_Project
+# Castle Frontend 專案
 
-This template should help get you started developing with Vue 3 in Vite.
+Castle 是一個以 Vue 3 + Vite 建構的前端專案，搭配後端 Go API（部署於 Render），前端則使用 Firebase Hosting。支援 RESTful API 呼叫、Token 驗證、圖片上傳等功能。
 
-## Recommended IDE Setup
+## 📦 技術棧
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- **Vue 3** + **Vite**：核心前端框架與建構工具  
+- **TypeScript**：靜態型別支援  
+- **Pinia**：狀態管理  
+- **Vue Router**：路由控制  
+- **Tailwind CSS**：快速風格套件  
+- **Firebase Hosting**：靜態網站部署  
+- **Axios**：API 請求工具  
 
-## Type Support for `.vue` Imports in TS
+---
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+## 🛠️ 開發建置流程
 
-## Customize configuration
+### 1. 安裝依賴
 
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-```sh
+```bash
 npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```

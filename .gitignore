@@ -32,3 +32,12 @@ coverage
 .env
 env.d.ts
 **/*.d.ts
+
+# Firebase cache and config files
+.firebase/
+firebase-debug.log
+.firebase-debug.*
+.firebase/*
+firebase.json.backup
+firebaserc.backup
+firebase.cache/
