@@ -1,19 +1,14 @@
 import axios from 'axios'
 import { useAuthStore } from '@/stores/auth'
-import { useRouter } from 'vue-router' // 🔍 這個你要加上！
 
-const isDev = import.meta.env.MODE === 'development'
-
-const baseURL = isDev
-  ? 'http://localhost:8080'
-  : 'https://你的正式後端網址.com'
+const baseURL = import.meta.env.VITE_API_BASE_URL
 
 const api = axios.create({
   baseURL,
   timeout: 5000,
 })
 
-// ✅ 加上 token
+// ✅ 自動附帶 token
 api.interceptors.request.use(
   (config) => {
     const authStore = useAuthStore()
@@ -26,13 +21,12 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 )
 
-// ✅ 自動導向登入頁
+// ✅ 攔截 401 並導向登入頁（用 window.href）
 api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      const router = useRouter()
-      router.push('/login')
+      window.location.href = '/login'
     }
     return Promise.reject(error)
   }
